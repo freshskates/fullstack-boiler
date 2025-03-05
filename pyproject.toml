@@ -17,10 +17,12 @@ dependencies = [
 build = "docker build -t backend-api ."
 dev = "fastapi dev ./src/backend"
 start = "fastapi run --workers 2 ./src/backend"
-dockerwin = "docker run --rm --volume %cd%:/app --volume /app/.venv --publish 8000:8000 -it backend-api"
-dockerunix = "docker run --rm --volume \"$(pwd)\":/app --volume /app/.venv --publish 8000:8000 -it backend-api \"$@\""
+compose = "docker-compose up"
+composebuild = "docker-compose up --build"
 clean = "docker rmi backend-api"
 test = "pytest ./tests"
+# dockerunix = "docker run --rm --volume \"$(pwd)\":/app --volume /app/.venv --publish 8000:8000 -it backend-api \"$@\""
+# dockerwin = "docker run --rm --volume %cd%:/app --volume /app/.venv --publish 8000:8000 -it backend-api"
 
 [build-system]
 requires = ["setuptools>=61"]
