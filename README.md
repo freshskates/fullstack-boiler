@@ -1,3 +1,5 @@
+![tests](https://github.com/freshskates/python-backend-boiler/actions/workflows/tests.yml/badge.svg)
+
 Python Backend Boilerplate
 
 This guide will help you set up and run the Python backend project.
