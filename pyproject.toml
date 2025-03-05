@@ -1,0 +1,32 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "backend api"
+readme = "README.md"
+authors = [
+    { name = "robert", email = "freshskates@proton.me" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.115.11",
+    "pytest>=8.3.5",
+]
+
+# uv run task <task-name>
+[tool.taskipy.tasks]
+build = "docker build -t backend-api ."
+dev = "fastapi dev ./src/backend"
+start = "fastapi run --workers 2 ./src/backend"
+dockerwin = "docker run --rm --volume %cd%:/app --volume /app/.venv --publish 8000:8000 -it backend-api"
+dockerunix = "docker run --rm --volume \"$(pwd)\":/app --volume /app/.venv --publish 8000:8000 -it backend-api \"$@\""
+clean = "docker rmi backend-api"
+test = "pytest ./tests"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "taskipy>=1.14.1",
+]
