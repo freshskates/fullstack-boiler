@@ -16,6 +16,7 @@ jobs:
           python-version: "3.12.x"
       - name: Install dependencies
         run: |
+          cd backend
           python -m pip install --upgrade pip
           pip install uv
           uv venv
