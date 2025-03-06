@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dockerize": "docker build -t frontend-app ."
   },
   "dependencies": {
     "next": "15.2.0",
