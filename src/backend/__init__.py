@@ -4,9 +4,6 @@ from backend.lib.types import Item
 
 app = FastAPI()
 
-def main():
-    print("Starting server...")
-
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
