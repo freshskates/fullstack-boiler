@@ -15,15 +15,30 @@ async def create_user(email: str, hashed_password: str):
         raise HTTPException(status_code=400, detail=f"User creation failed: {str(e)}")
 
 async def get_user(user_id: str):
-    user = await prisma.user.find_unique(where={'id': user_id})
+    user = await prisma.user.find_unique(
+        where={"id": user_id},
+        include={
+            "posts": True,
+        }
+    )
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    return user
+    user_dict = user.model_dump()  
+    user_dict.pop("password", None)
+
+    return user_dict
 
 async def get_user_by_email(email: str):
-    return await prisma.user.find_unique(where={'email': email})
+    user = await prisma.user.find_unique(
+        where={"email": email},
+        include={
+            "posts": False,
+        }
+    )
+
+    return user
 
 async def update_user(user_id: str, data: dict):
     try:

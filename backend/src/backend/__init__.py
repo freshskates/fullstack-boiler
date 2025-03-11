@@ -4,6 +4,7 @@ from fastapi.concurrency import asynccontextmanager
 from backend.lib.db import prisma
 from backend.routers import posts, users
 from backend.lib.types import Item
+from fastapi.middleware.cors import CORSMiddleware
 
 # https://fastapi.tiangolo.com/advanced/events/#async-context-manager
 # best practice when handling db connections
@@ -17,9 +18,16 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"],  
+)
+
 app.include_router(users.router)
 app.include_router(posts.router)
-
 
 @app.get("/health")
 async def health_check():
@@ -27,6 +35,7 @@ async def health_check():
 
 @app.api_route("/{path_name:path}", methods=["GET", "POST", "PUT", "DELETE"])
 async def catch_all(request: Request, path_name: str):
+    print(f"Path: {path_name}")
     return {
         "path": path_name,
         "method": request.method,
