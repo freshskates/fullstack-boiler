@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ProfileDropdown } from "./ProfileDropdown";
+import { useUser } from "../hooks/useUser";
 
 function NavMenuLinks() {
   return (
@@ -23,13 +24,13 @@ function NavMenuLinks() {
           <NavigationMenuTrigger>Features</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <ListItem href="/docs" title="Login">
+              <ListItem href="/login" title="Login">
                 Login with your account
               </ListItem>
-              <ListItem href="/docs/installation" title="Register">
+              <ListItem href="/register" title="Register">
                 Register for a new account
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Overview">
+              <ListItem href="/" title="Overview">
                 Information of your account
               </ListItem>
             </ul>
@@ -47,10 +48,12 @@ function NavMenuLinks() {
 }
 
 export function NavMenu() {
+  const { user } = useUser();
+
   return (
     <div className="flex justify-between p-4 items-center">
       <NavMenuLinks />
-      <ProfileDropdown />
+      {user && <ProfileDropdown />}
     </div>
   );
 }

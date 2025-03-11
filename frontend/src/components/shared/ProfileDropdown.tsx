@@ -14,15 +14,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import UserAvatar from "./UserAvatar";
+import { useUser } from "../hooks/useUser";
 
 export function ProfileDropdown() {
+  const { user, logout } = useUser();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <UserAvatar />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mx-2">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-sm">{user?.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
@@ -33,7 +36,7 @@ export function ProfileDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuItem disabled>Settings</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => logout()}>
           Log out
           <DropdownMenuShortcut>{">"}</DropdownMenuShortcut>
         </DropdownMenuItem>

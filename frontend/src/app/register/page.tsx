@@ -1,16 +1,51 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/components/hooks/useUser";
+import Link from "next/link";
 
 export default function RegisterPage() {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const { setToken } = useUser(); // Use setToken from useUser
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const registerMutation = useMutation({
+    mutationFn: async (registerData: { email: string; password: string }) => {
+      const response = await axios.post(
+        "http://localhost:8000/users/create",
+        registerData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      return response.data;
+    },
+    onSuccess: (data: any) => {
+      console.log("Registration successful:", data);
+
+      // Save token using useUser
+      setToken(data.token);
+
+      // Redirect user to dashboard
+      router.push("/");
+    },
+    onError: (error: any) => {
+      console.error("Registration failed:", error);
+      setError("Failed to register. Please try again.");
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Registering with:", { name, email, password });
+    setError(null);
+    registerMutation.mutate({ email, password });
   };
 
   return (
@@ -33,12 +68,20 @@ export default function RegisterPage() {
           className="p-2 border rounded-md"
           required
         />
+        <p className="text-sm text-center">
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-500">
+            Login
+          </Link>
+        </p>
         <Button
           type="submit"
-          className=" p-2 rounded-md transition-all hover:cursor-pointer"
+          className="p-2 rounded-md transition-all hover:cursor-pointer"
+          disabled={registerMutation.isPending}
         >
-          Register
+          {registerMutation.isPending ? "Registering..." : "Register"}
         </Button>
+        {error && <p className="text-red-500">{error}</p>}
       </form>
     </div>
   );

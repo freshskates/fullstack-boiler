@@ -6,11 +6,11 @@ interface AvatarProps {
 }
 
 function UserAvatar({ imageUrl }: AvatarProps) {
-  const imageUrl_ = imageUrl ? imageUrl : "https://github.com/shadcn.png";
+  const imageUrl_ = imageUrl ? imageUrl : "/img/default_avatar.webp";
 
   return (
     <Avatar className="h-10 w-10 rounded-full">
-      <AvatarImage src={imageUrl_} alt="@shadcn" />
+      <AvatarImage src={imageUrl_} alt="deafult avatar" />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
   );
