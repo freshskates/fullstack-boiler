@@ -1,41 +1,44 @@
 #!/bin/bash
 
-echo "copying env sample files.."
+echo "Copying env sample files..."
 
 cp ./frontend/.env.sample ./frontend/.env
 cp ./backend/.env.sample ./backend/.env
 
 cd backend || exit
 
-echo "installing uv.."
+# echo "Creating Python venv"
+# python -m venv venv
+
+echo "Installing uv..."
 pip install uv
 
-echo "creating virtual environment.."
+echo "Creating virtual environment..."
 uv venv 
 
-echo "activating virtual environment.."
+echo "Activating virtual environment..."
 source .venv/bin/activate
 
-echo "installing requirements with uv venv.."
+echo "Installing requirements with uv venv..."
 uv sync
 
-echo "generating db schema.."
+echo "Generating db schema..."
 prisma generate
 
-echo "you can now run the backend server with"
+echo "You can now run the backend server with:"
 echo "uv run task dev"
 
 cd .. || exit
 
-echo "installing frontend dependencies..."
+echo "Installing frontend dependencies...."
 cd frontend || exit
 
-echo "installing node modules..."
+echo "Installing node modules...."
 npm install
 
-echo "you can now run the frontend server with"
+echo "You can now run the frontend server with:"
 echo "npm run dev"
 
 cd .. || exit
 
-echo "done"
+echo "Done"
