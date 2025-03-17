@@ -59,10 +59,11 @@ class CommandHandler:
             arguments
         )
 
-        for i in arguments:
-            print(i)
+        # For Debugging
+        # for i in arguments:
+            # print(i)
 
-        # subprocess.run(execution_string, shell=True)
+        subprocess.run(execution_string, shell=True)
 
 # ------------ Sequence of Commands Start ------------
 
