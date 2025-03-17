@@ -69,7 +69,7 @@ class CommandHandler:
 
 command_handler = CommandHandler()
 
-command_handler.add_argumenet(fr'cd {CURRENT_WORKING_DIRECTORY}')
+command_handler.add_argumenet(fr'cd "{CURRENT_WORKING_DIRECTORY}"')
 command_handler.add_argumenet(r'echo "Copying env sample files..."')
 
 command_handler.add_argumenet_cmd(r'copy frontend\.env.sample frontend\.env')
@@ -81,7 +81,6 @@ command_handler.add_argumenet(r'cd backend')
 
 # command_handler.add_argumenet(r'echo "Creating Python venv"')
 # command_handler.add_argumenet(r'python -m venv venv')
-
 
 command_handler.add_argumenet(r'echo "Installing uv..."')
 command_handler.add_argumenet(r'pip install uv')
