@@ -2,9 +2,10 @@ import platform
 import queue
 import subprocess
 from typing import List, Tuple, Union
+from pathlib import Path
 
 COMMAND_LOGICAL_AND_OPERATOR = "&&"
-
+CURRENT_WORKING_DIRECTORY = Path.cwd()
 
 class CommandHandler:
     """
@@ -58,16 +59,17 @@ class CommandHandler:
             arguments
         )
 
-        # for i in arguments:
-        #     print(i)
+        for i in arguments:
+            print(i)
 
-        subprocess.run(execution_string, shell=True)
+        # subprocess.run(execution_string, shell=True)
 
 # ------------ Sequence of Commands Start ------------
 
 
 command_handler = CommandHandler()
 
+command_handler.add_argumenet(fr'cd {CURRENT_WORKING_DIRECTORY}')
 command_handler.add_argumenet(r'echo "Copying env sample files..."')
 
 command_handler.add_argumenet_cmd(r'copy frontend\.env.sample frontend\.env')
